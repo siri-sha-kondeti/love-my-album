@@ -93,51 +93,86 @@ function Header() {
 }
 
 function Hero() {
+  const chips = [
+    { label: "ANSI X12", pos: "-left-4 top-16", anim: "float-slow" },
+    { label: "EDIFACT", pos: "-right-6 top-1/2", anim: "float-slower" },
+    { label: "SAP IDocs", pos: "left-6 -bottom-2", anim: "float-slower" },
+    { label: "XML", pos: "right-10 -top-3", anim: "float-slow" },
+  ];
   return (
-    <section id="home" className="relative overflow-hidden bg-primary pt-16 text-primary-foreground">
-      <div className="dot-grid absolute inset-0 opacity-60" aria-hidden />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
+    <section id="home" className="relative isolate overflow-hidden bg-primary pt-16 text-primary-foreground">
+      <div className="dot-grid absolute inset-0 -z-10 opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" aria-hidden />
+      <div className="glow-accent absolute -right-40 -top-40 -z-10 h-[38rem] w-[38rem] rounded-full blur-2xl" aria-hidden />
+      <div className="glow-secondary absolute -bottom-52 -left-40 -z-10 h-[34rem] w-[34rem] rounded-full blur-2xl" aria-hidden />
+
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-5 py-20 md:py-28 lg:grid-cols-[1.15fr_1fr]">
         <div className="fade-up">
-          <Eyebrow light>Hello, I'm</Eyebrow>
-          <h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">{profile.name}</h1>
-          <p className="mt-3 text-xl font-semibold text-accent">{profile.title}</p>
-          <p className="mt-5 max-w-lg leading-relaxed text-hero-muted">{profile.summary[0]}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#experience" className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-bold text-accent-foreground transition hover:brightness-110">
-              View My Experience <ArrowRight className="h-4 w-4" />
+          <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold text-primary-foreground/90">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            7+ years in SAP & EDI integration
+          </span>
+          <h1 className="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            Sirisha <span className="text-gradient">Kondeti</span>
+          </h1>
+          <p className="mt-5 text-lg font-semibold text-primary-foreground/90 sm:text-xl">
+            {profile.title}
+          </p>
+          <p className="mt-4 max-w-xl leading-relaxed text-hero-muted">{profile.summary[0]}</p>
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <a href="#experience" className="group inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-bold text-accent-foreground shadow-lg shadow-accent/30 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/40">
+              View My Experience <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </a>
-            <a href="#contact" className="inline-flex items-center rounded-full border border-primary-foreground/30 px-6 py-3 text-sm font-bold transition hover:bg-primary-foreground/10">
+            <a href="#contact" className="glass inline-flex items-center rounded-full px-7 py-3.5 text-sm font-bold transition hover:-translate-y-0.5">
               Contact Me
             </a>
-            <a href="#skills" className="inline-flex items-center px-3 py-3 text-sm font-semibold text-hero-muted underline-offset-4 hover:text-primary-foreground hover:underline">
-              Explore My Skills
+            <a href="#skills" className="inline-flex items-center gap-1 px-3 py-3 text-sm font-semibold text-hero-muted transition hover:text-primary-foreground">
+              Explore My Skills <ChevronDown className="h-4 w-4" />
             </a>
           </div>
+          <dl className="mt-12 grid max-w-lg grid-cols-3 gap-3">
+            {[["7+", "Years experience"], ["3", "Continents"], ["850·830·855", "EDI transactions"]].map(([v, l]) => (
+              <div key={l} className="glass rounded-2xl px-4 py-3">
+                <dt className="sr-only">{l}</dt>
+                <dd className="truncate text-xl font-extrabold">{v}</dd>
+                <dd className="text-xs text-hero-muted">{l}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-        <div className="relative mx-auto w-full max-w-sm fade-up">
-          <div className="absolute -left-6 top-10 h-24 w-24 rounded-full border-2 border-accent/60" aria-hidden />
-          <div className="absolute -right-4 bottom-6 h-16 w-16 rotate-12 rounded-xl bg-accent/80" aria-hidden />
-          <div className="relative aspect-square rounded-full bg-gradient-to-br from-secondary to-primary p-2 ring-1 ring-primary-foreground/20">
-            <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-primary-foreground/5">
-              <span className="text-7xl font-extrabold tracking-tight text-primary-foreground/90">SK</span>
-              <span className="mt-2 text-xs uppercase tracking-[0.25em] text-hero-muted">Portrait</span>
+
+        <div className="relative mx-auto w-full max-w-md fade-up">
+          <div className="spin-slow absolute -inset-6 rounded-full border border-dashed border-primary-foreground/20" aria-hidden />
+          <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-br from-accent via-secondary to-transparent opacity-70 blur-sm" aria-hidden />
+          <div className="glass relative aspect-[4/5] overflow-hidden rounded-[2.5rem]">
+            <div className="dot-grid absolute inset-0 opacity-40" aria-hidden />
+            <div className="relative flex h-full flex-col items-center justify-center">
+              <div className="flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-br from-accent to-secondary shadow-2xl">
+                <span className="text-6xl font-extrabold tracking-tight text-primary-foreground">SK</span>
+              </div>
+              <p className="mt-6 text-sm font-semibold">{profile.name}</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-hero-muted">Portrait</p>
+            </div>
+            <div className="glass absolute inset-x-4 bottom-4 flex items-center gap-3 rounded-2xl p-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground"><Globe2 className="h-5 w-5" /></span>
+              <p className="text-xs font-semibold leading-snug">International projects across North America, South America & Europe</p>
             </div>
           </div>
-          <div className="absolute -right-2 top-6 rounded-xl bg-background px-4 py-3 text-foreground shadow-xl">
-            <p className="text-2xl font-extrabold text-primary">7+</p>
-            <p className="text-xs text-muted-foreground">Years experience</p>
-          </div>
-          <div className="absolute -left-2 bottom-4 flex items-center gap-2 rounded-xl bg-background px-4 py-3 text-foreground shadow-xl">
-            <Globe2 className="h-5 w-5 text-accent" />
-            <p className="text-xs font-semibold leading-tight">North America · South<br />America · Europe</p>
-          </div>
+          {chips.map((c) => (
+            <span key={c.label} className={`glass absolute ${c.pos} ${c.anim} hidden rounded-full px-3.5 py-1.5 text-xs font-bold shadow-lg sm:inline-flex`}>
+              {c.label}
+            </span>
+          ))}
         </div>
       </div>
-      <div className="relative border-t border-primary-foreground/10 bg-primary-foreground/5">
-        <ul className="mx-auto flex max-w-6xl flex-wrap justify-center gap-x-8 gap-y-3 px-5 py-5">
+
+      <div className="relative overflow-hidden border-t border-primary-foreground/10">
+        <ul className="mx-auto flex max-w-6xl flex-wrap justify-center gap-3 px-5 py-6">
           {expertiseStrip.map((e) => (
-            <li key={e} className="flex items-center gap-2 text-sm font-semibold text-primary-foreground/90">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />{e}
+            <li key={e} className="glass rounded-full px-4 py-1.5 text-sm font-semibold text-primary-foreground/90 transition hover:border-accent hover:text-accent">
+              {e}
             </li>
           ))}
         </ul>
