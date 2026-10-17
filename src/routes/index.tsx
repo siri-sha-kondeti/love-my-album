@@ -165,7 +165,7 @@ function Hero() {
             </div>
             <div className="glass absolute inset-x-4 bottom-4 flex items-center gap-3 rounded-2xl p-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground"><Globe2 className="h-5 w-5" /></span>
-              <p className="text-xs font-semibold leading-snug">International projects across North America, South America & Europe</p>
+              <p className="text-xs font-semibold leading-snug">International projects across India, USA & Europe</p>
             </div>
           </div>
           {chips.map((c) => (
@@ -220,7 +220,7 @@ function Skills() {
     <section id="skills" className="relative bg-surface py-28">
       <div className="dot-grid-muted absolute inset-0 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_60%)]" aria-hidden />
       <div className="relative mx-auto max-w-6xl px-5">
-        <SectionHead eyebrow="Technical skills" title="Expertise across SAP and EDI" intro="Grouped as listed in the CV — modules, standards, integration, protocols, configuration, documentation, support, and tools." />
+        <SectionHead eyebrow="Technical skills" title="Expertise across SAP and EDI" intro="Modules, standards, integration, protocols, configuration, documentation, support, and tools." />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((s, i) => {
             const Icon = skillIcons[i % skillIcons.length]!;
@@ -328,7 +328,7 @@ function Project() {
             </ul>
           </div>
           <div className="bg-card p-8 sm:p-10">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-secondary">Documented responsibilities</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-secondary">Roles and Responsibilities</h3>
             <ol className="mt-5 space-y-4">
               {r.responsibilities.map((x, i) => (
                 <li key={x} className="flex gap-4 text-sm leading-relaxed text-foreground/85">
