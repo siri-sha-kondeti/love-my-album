@@ -30,17 +30,15 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Build portfolio
-        run: bun run build
+        run: bunx vite build --config vite.pages.config.ts
 
       - name: Check build output
-        run: |
-          find . -maxdepth 4 -name index.html -print
-          test -f .output/public/index.html
+        run: test -f dist/index.html
 
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .output/public
+          path: dist
 
   deploy:
     needs: build
