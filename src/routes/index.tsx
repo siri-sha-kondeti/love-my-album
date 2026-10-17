@@ -178,7 +178,7 @@ function Skills() {
         <SectionHead eyebrow="Technical skills" title="Expertise across SAP and EDI" intro="Grouped as listed in the CV — modules, standards, integration, protocols, configuration, documentation, support, and tools." />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((s, i) => {
-            const Icon = skillIcons[i];
+            const Icon = skillIcons[i % skillIcons.length]!;
             const featured = i === 1;
             return (
               <article key={s.title}
@@ -253,7 +253,7 @@ function Experience() {
 
 function Project() {
   const tags = ["ANSI X12", "EDIFACT", "XML", "SAP IDocs", "Citrix", "GIS"];
-  const r = experience[0];
+  const r = experience[0]!;
   return (
     <section className="py-24">
       <div className="mx-auto max-w-6xl px-5">
@@ -298,7 +298,7 @@ function Competencies() {
         <SectionHead eyebrow="Core competencies" title="What I bring to a project" />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {competencies.map((c, i) => {
-            const Icon = compIcons[i];
+            const Icon = compIcons[i % compIcons.length]!;
             return (
               <div key={c} className="rounded-2xl border bg-card p-6 text-center transition hover:shadow-md">
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground">
