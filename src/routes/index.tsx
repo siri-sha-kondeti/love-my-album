@@ -153,9 +153,13 @@ function Hero() {
           <div className="glass relative aspect-[4/5] overflow-hidden rounded-[2.5rem]">
             <div className="dot-grid absolute inset-0 opacity-40" aria-hidden />
             <div className="relative flex h-full flex-col items-center justify-center">
-              <div className="flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-br from-accent to-secondary shadow-2xl">
-                <span className="text-6xl font-extrabold tracking-tight text-primary-foreground">SK</span>
-              </div>
+            <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-accent to-secondary shadow-2xl">
+              <img
+                src="https://i.postimg.cc/V6zTmQs9/Sirisha-profile-pic-(8).jpg"
+                alt="Sirisha Kondeti"
+                className="h-full w-full object-cover"
+              />
+            </div>
               <p className="mt-6 text-sm font-semibold">{profile.name}</p>
               <p className="text-xs uppercase tracking-[0.25em] text-hero-muted">Portrait</p>
             </div>
