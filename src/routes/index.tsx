@@ -32,15 +32,19 @@ const nav = [
 const skillIcons = [Boxes, Repeat, FileText, Network, Lock, Layers, ShieldCheck, LifeBuoy, Wrench];
 const compIcons = [Repeat, Layers, Boxes, Network, Code2, LifeBuoy, FileText, Users];
 
-function Eyebrow({ children, light }: { children: ReactNode; light?: boolean }) {
-  return <p className={`text-xs font-bold uppercase tracking-[0.2em] ${light ? "text-accent" : "text-accent"}`}>{children}</p>;
+function Eyebrow({ children }: { children: ReactNode; light?: boolean }) {
+  return (
+    <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-accent">
+      <span className="h-px w-6 bg-accent" />{children}
+    </p>
+  );
 }
 
 function SectionHead({ eyebrow, title, intro }: { eyebrow: string; title: string; intro?: string }) {
   return (
-    <div className="mx-auto mb-12 max-w-2xl text-center">
+    <div className="mx-auto mb-14 max-w-2xl text-center">
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-primary sm:text-4xl">{title}</h2>
+      <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-gradient-brand sm:text-5xl">{title}</h2>
       {intro && <p className="mt-4 text-muted-foreground">{intro}</p>}
     </div>
   );
@@ -183,21 +187,22 @@ function Hero() {
 
 function About() {
   return (
-    <section id="about" className="relative bg-surface py-24">
-      <div className="dot-grid-muted absolute inset-y-0 right-0 w-1/3 opacity-60" aria-hidden />
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1.2fr_1fr]">
-        <div>
+    <section id="about" className="section-glow relative py-28">
+      <div className="mx-auto grid max-w-6xl gap-14 px-5 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+        <div className="lg:sticky lg:top-28">
           <Eyebrow>About me</Eyebrow>
-          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-primary sm:text-4xl">Connecting business processes through SAP and EDI</h2>
-          <div className="mt-6 space-y-4 leading-relaxed text-muted-foreground">
+          <h2 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-primary sm:text-5xl">
+            Connecting business processes through <span className="text-gradient-brand">SAP and EDI</span>
+          </h2>
+          <div className="mt-8 space-y-5 border-l-2 border-accent/40 pl-6 leading-relaxed text-muted-foreground">
             {profile.summary.map((p) => <p key={p.slice(0, 20)}>{p}</p>)}
           </div>
         </div>
-        <ul className="grid content-start gap-3">
+        <ul className="grid gap-3 sm:grid-cols-2">
           {aboutHighlights.map((h, i) => (
-            <li key={h} className={`flex items-start gap-3 rounded-xl border p-4 ${i % 3 === 0 ? "border-accent/30 bg-highlight" : "bg-card"}`}>
-              <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{i + 1}</span>
-              <span className="text-sm font-semibold text-foreground">{h}</span>
+            <li key={h} className={`card-modern p-5 ${i === 0 || i === 7 ? "sm:col-span-2 bg-primary text-primary-foreground" : ""}`}>
+              <span className={`text-xs font-extrabold tracking-widest ${i === 0 || i === 7 ? "text-accent" : "text-secondary"}`}>{String(i + 1).padStart(2, "0")}</span>
+              <p className="mt-2 text-sm font-semibold leading-snug">{h}</p>
             </li>
           ))}
         </ul>
@@ -208,8 +213,9 @@ function About() {
 
 function Skills() {
   return (
-    <section id="skills" className="py-24">
-      <div className="mx-auto max-w-6xl px-5">
+    <section id="skills" className="relative bg-surface py-28">
+      <div className="dot-grid-muted absolute inset-0 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_60%)]" aria-hidden />
+      <div className="relative mx-auto max-w-6xl px-5">
         <SectionHead eyebrow="Technical skills" title="Expertise across SAP and EDI" intro="Grouped as listed in the CV — modules, standards, integration, protocols, configuration, documentation, support, and tools." />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((s, i) => {
@@ -217,14 +223,18 @@ function Skills() {
             const featured = i === 1;
             return (
               <article key={s.title}
-                className={`rounded-2xl border p-6 transition hover:-translate-y-1 hover:shadow-lg ${featured ? "border-primary bg-primary text-primary-foreground" : "bg-card"}`}>
-                <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${featured ? "bg-accent text-accent-foreground" : "bg-highlight text-highlight-foreground"}`}>
-                  <Icon className="h-5 w-5" />
+                className={`card-modern group overflow-hidden p-7 ${featured ? "border-primary bg-primary text-primary-foreground lg:row-span-1" : ""}`}>
+                {featured && <div className="glow-accent absolute -right-20 -top-20 h-56 w-56 rounded-full" aria-hidden />}
+                <div className="relative flex items-center justify-between">
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${featured ? "bg-accent text-accent-foreground" : "bg-brand text-primary-foreground"} shadow-lg transition group-hover:scale-110`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className={`text-xs font-bold ${featured ? "text-hero-muted" : "text-muted-foreground"}`}>{s.items.length} skills</span>
                 </div>
-                <h3 className="text-lg font-bold">{s.title}</h3>
-                <ul className="mt-4 flex flex-wrap gap-2">
+                <h3 className="relative mt-5 text-lg font-bold">{s.title}</h3>
+                <ul className="relative mt-4 flex flex-wrap gap-2">
                   {s.items.map((it) => (
-                    <li key={it} className={`rounded-full px-3 py-1 text-xs font-medium ${featured ? "bg-primary-foreground/10 text-primary-foreground" : "bg-muted text-foreground"}`}>{it}</li>
+                    <li key={it} className={`rounded-full border px-3 py-1 text-xs font-medium transition ${featured ? "border-primary-foreground/15 bg-primary-foreground/10 text-primary-foreground" : "border-border bg-muted text-foreground group-hover:border-accent/30"}`}>{it}</li>
                   ))}
                 </ul>
               </article>
@@ -236,25 +246,29 @@ function Skills() {
   );
 }
 
-function RoleCard({ role, defaultOpen }: { role: (typeof experience)[number]; defaultOpen: boolean }) {
+function RoleCard({ role, defaultOpen, index }: { role: (typeof experience)[number]; defaultOpen: boolean; index: number }) {
   const [open, setOpen] = useState(defaultOpen);
   const preview = 3;
   const items = open ? role.responsibilities : role.responsibilities.slice(0, preview);
   return (
-    <li className="relative pl-10">
-      <span className="absolute left-0 top-6 flex h-6 w-6 items-center justify-center rounded-full border-4 border-background bg-accent" aria-hidden />
-      <article className="rounded-2xl border bg-card p-6 sm:p-8">
+    <li className="relative pl-14">
+      <span className="absolute left-0 top-7 flex h-10 w-10 items-center justify-center rounded-full bg-brand text-sm font-extrabold text-primary-foreground shadow-lg ring-8 ring-surface" aria-hidden>
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <article className="card-modern p-6 sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="text-xl font-bold text-primary">{role.title}</h3>
+            <h3 className="text-xl font-bold text-primary sm:text-2xl">{role.title}</h3>
             <p className="mt-1 font-semibold text-foreground">{role.company}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{role.meta.join(" · ")}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {role.meta.map((m) => <span key={m} className="rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">{m}</span>)}
+            </div>
           </div>
-          <span className="shrink-0 rounded-full bg-highlight px-3 py-1 text-xs font-bold text-highlight-foreground">{role.duration}</span>
+          <span className="shrink-0 rounded-full bg-highlight px-3.5 py-1.5 text-xs font-bold text-highlight-foreground">{role.duration}</span>
         </div>
-        {role.overview && <p className="mt-4 rounded-lg bg-muted p-4 text-sm italic text-muted-foreground">{role.overview}</p>}
-        <h4 className="mt-5 text-xs font-bold uppercase tracking-widest text-secondary">Roles and Responsibilities</h4>
-        <ul className="mt-3 space-y-2.5">
+        {role.overview && <p className="mt-5 rounded-2xl border-l-4 border-accent bg-muted p-4 text-sm italic text-muted-foreground">{role.overview}</p>}
+        <h4 className="mt-6 text-xs font-bold uppercase tracking-widest text-secondary">Roles and Responsibilities</h4>
+        <ul className="mt-3 grid gap-2.5">
           {items.map((r) => (
             <li key={r} className="flex gap-3 text-sm leading-relaxed text-foreground/85">
               <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />{r}
@@ -263,7 +277,7 @@ function RoleCard({ role, defaultOpen }: { role: (typeof experience)[number]; de
         </ul>
         {role.responsibilities.length > preview && (
           <button onClick={() => setOpen(!open)} aria-expanded={open}
-            className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary hover:text-accent focus-visible:outline-2 focus-visible:outline-ring">
+            className="mt-5 inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-bold text-primary transition hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-ring">
             {open ? "Show less" : `Show all ${role.responsibilities.length} responsibilities`}
             <ChevronDown className={`h-4 w-4 transition ${open ? "rotate-180" : ""}`} />
           </button>
@@ -275,11 +289,11 @@ function RoleCard({ role, defaultOpen }: { role: (typeof experience)[number]; de
 
 function Experience() {
   return (
-    <section id="experience" className="bg-surface py-24">
+    <section id="experience" className="bg-surface py-28">
       <div className="mx-auto max-w-4xl px-5">
         <SectionHead eyebrow="Professional experience" title="Career timeline" />
-        <ol className="relative space-y-8 before:absolute before:bottom-0 before:left-[11px] before:top-6 before:w-0.5 before:bg-border">
-          {experience.map((r, i) => <RoleCard key={r.title} role={r} defaultOpen={i === 0} />)}
+        <ol className="relative space-y-10 before:absolute before:bottom-6 before:left-[19px] before:top-8 before:w-0.5 before:bg-gradient-to-b before:from-accent before:via-secondary/50 before:to-transparent">
+          {experience.map((r, i) => <RoleCard key={r.title} role={r} index={i} defaultOpen={i === 0} />)}
         </ol>
       </div>
     </section>
@@ -290,35 +304,34 @@ function Project() {
   const tags = ["ANSI X12", "EDIFACT", "XML", "SAP IDocs", "Citrix", "GIS"];
   const r = experience[0]!;
   return (
-    <section className="py-24">
+    <section className="section-glow py-28">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHead eyebrow="Featured project" title="EDI Mapping and Integration Support — Sealed Air" />
-        <article className="grid overflow-hidden rounded-3xl border md:grid-cols-[1fr_1.4fr]">
-          <div className="relative bg-primary p-8 text-primary-foreground">
-            <div className="dot-grid absolute inset-0 opacity-50" aria-hidden />
-            <div className="relative">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-foreground/10 px-3 py-1 text-xs font-semibold">
-                <Lock className="h-3 w-3" /> Employer: Confidential
-              </span>
-              <dl className="mt-6 space-y-4 text-sm">
-                <div><dt className="text-hero-muted">Client</dt><dd className="text-lg font-bold">Sealed Air</dd></div>
-                <div><dt className="text-hero-muted">Engagement</dt><dd className="font-semibold">Freelance, May 2024 – May 2025</dd></div>
-              </dl>
-              <p className="mt-6 text-sm leading-relaxed text-hero-muted">{r.overview}</p>
-              <ul className="mt-6 flex flex-wrap gap-2">
-                {tags.map((t) => <li key={t} className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">{t}</li>)}
-              </ul>
-            </div>
+        <article className="grid overflow-hidden rounded-[2rem] border shadow-2xl md:grid-cols-[1fr_1.4fr]">
+          <div className="relative isolate overflow-hidden bg-primary p-8 text-primary-foreground sm:p-10">
+            <div className="dot-grid absolute inset-0 -z-10 opacity-40" aria-hidden />
+            <div className="glow-accent absolute -bottom-24 -left-24 -z-10 h-72 w-72 rounded-full" aria-hidden />
+            <span className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold">
+              <Lock className="h-3 w-3" /> Employer: Confidential
+            </span>
+            <dl className="mt-8 grid gap-3 text-sm">
+              <div className="glass rounded-2xl p-4"><dt className="text-xs text-hero-muted">Client</dt><dd className="text-xl font-bold">Sealed Air</dd></div>
+              <div className="glass rounded-2xl p-4"><dt className="text-xs text-hero-muted">Engagement</dt><dd className="font-semibold">Freelance, May 2024 – May 2025</dd></div>
+            </dl>
+            <p className="mt-6 text-sm leading-relaxed text-hero-muted">{r.overview}</p>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {tags.map((t) => <li key={t} className="rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">{t}</li>)}
+            </ul>
           </div>
-          <div className="bg-card p-8">
+          <div className="bg-card p-8 sm:p-10">
             <h3 className="text-xs font-bold uppercase tracking-widest text-secondary">Documented responsibilities</h3>
-            <ul className="mt-4 space-y-3">
-              {r.responsibilities.map((x) => (
-                <li key={x} className="flex gap-3 text-sm leading-relaxed text-foreground/85">
-                  <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-accent" />{x}
+            <ol className="mt-5 space-y-4">
+              {r.responsibilities.map((x, i) => (
+                <li key={x} className="flex gap-4 text-sm leading-relaxed text-foreground/85">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-highlight text-xs font-extrabold text-highlight-foreground">{i + 1}</span>{x}
                 </li>
               ))}
-            </ul>
+            </ol>
           </div>
         </article>
       </div>
@@ -328,16 +341,19 @@ function Project() {
 
 function Competencies() {
   return (
-    <section className="bg-surface py-24">
+    <section className="bg-surface py-28">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHead eyebrow="Core competencies" title="What I bring to a project" />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {competencies.map((c, i) => {
             const Icon = compIcons[i % compIcons.length]!;
             return (
-              <div key={c} className="rounded-2xl border bg-card p-6 text-center transition hover:shadow-md">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                  <Icon className="h-6 w-6" />
+              <div key={c} className="card-modern group p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand text-primary-foreground shadow-lg transition group-hover:rotate-6 group-hover:scale-110">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className="text-3xl font-extrabold text-border transition group-hover:text-accent/40">{String(i + 1).padStart(2, "0")}</span>
                 </div>
                 <p className="text-sm leading-relaxed text-foreground/85">{c}</p>
               </div>
@@ -351,18 +367,21 @@ function Competencies() {
 
 function Education() {
   return (
-    <section id="education" className="py-24">
-      <div className="mx-auto max-w-3xl px-5">
+    <section id="education" className="section-glow py-28">
+      <div className="mx-auto max-w-4xl px-5">
         <SectionHead eyebrow="Education" title="Academic background" />
-        <div className="flex flex-col gap-5 rounded-2xl border bg-card p-8 sm:flex-row sm:items-center">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-highlight text-highlight-foreground">
-            <GraduationCap className="h-8 w-8" />
+        <div className="card-modern overflow-hidden p-0">
+          <div className="h-1.5 bg-brand" />
+          <div className="flex flex-col gap-6 p-8 sm:flex-row sm:items-center">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-brand text-primary-foreground shadow-lg">
+              <GraduationCap className="h-8 w-8" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-xl font-bold text-primary">{education.degree}</h3>
+              <p className="mt-1 text-muted-foreground">{education.institution}</p>
+            </div>
+            <span className="shrink-0 rounded-full bg-highlight px-4 py-1.5 text-sm font-bold text-highlight-foreground">{education.duration}</span>
           </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="text-lg font-bold text-primary">{education.degree}</h3>
-            <p className="mt-1 text-muted-foreground">{education.institution}</p>
-          </div>
-          <span className="shrink-0 rounded-full bg-muted px-4 py-1.5 text-sm font-bold text-foreground">{education.duration}</span>
         </div>
       </div>
     </section>
@@ -386,25 +405,27 @@ function Contact() {
   }
   const field = "w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none focus:border-accent focus:ring-2 focus:ring-ring/30";
   return (
-    <section id="contact" className="relative overflow-hidden bg-primary py-24 text-primary-foreground">
-      <div className="dot-grid absolute inset-0 opacity-50" aria-hidden />
+    <section id="contact" className="relative isolate overflow-hidden bg-primary py-28 text-primary-foreground">
+      <div className="dot-grid absolute inset-0 -z-10 opacity-40" aria-hidden />
+      <div className="glow-accent absolute -right-40 top-0 -z-10 h-[36rem] w-[36rem] rounded-full blur-2xl" aria-hidden />
+      <div className="glow-secondary absolute -bottom-40 -left-40 -z-10 h-[30rem] w-[30rem] rounded-full blur-2xl" aria-hidden />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-2">
         <div>
           <Eyebrow light>Contact</Eyebrow>
-          <h2 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">Have an SAP or EDI role in mind? Let's talk.</h2>
+          <h2 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">Have an SAP or EDI role in mind? <span className="text-gradient">Let's talk.</span></h2>
           <p className="mt-4 max-w-md text-hero-muted">Recruiters, hiring managers, and prospective consulting clients are welcome to get in touch.</p>
           <div className="mt-8 space-y-4">
-            <a href={profile.phoneHref} className="flex items-center gap-4 rounded-xl bg-primary-foreground/5 p-4 transition hover:bg-primary-foreground/10">
+            <a href={profile.phoneHref} className="flex items-center gap-4 glass rounded-2xl p-4 transition hover:-translate-y-0.5">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-accent-foreground"><Phone className="h-5 w-5" /></span>
               <span><span className="block text-xs text-hero-muted">Phone</span><span className="font-semibold">{profile.phone}</span></span>
             </a>
-            <a href={`mailto:${profile.email}`} className="flex items-center gap-4 rounded-xl bg-primary-foreground/5 p-4 transition hover:bg-primary-foreground/10">
+            <a href={`mailto:${profile.email}`} className="flex items-center gap-4 glass rounded-2xl p-4 transition hover:-translate-y-0.5">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-accent-foreground"><Mail className="h-5 w-5" /></span>
               <span className="min-w-0"><span className="block text-xs text-hero-muted">Email</span><span className="block truncate font-semibold">{profile.email}</span></span>
             </a>
           </div>
         </div>
-        <form onSubmit={submit} noValidate className="rounded-2xl bg-card p-6 text-card-foreground shadow-2xl sm:p-8">
+        <form onSubmit={submit} noValidate className="rounded-[2rem] bg-card p-6 text-card-foreground shadow-2xl ring-1 ring-primary-foreground/20 sm:p-10">
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="text-sm font-semibold">Name<input className={`${field} mt-1.5`} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} maxLength={100} /></label>
             <label className="text-sm font-semibold">Email<input type="email" className={`${field} mt-1.5`} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} maxLength={255} /></label>
@@ -413,7 +434,7 @@ function Contact() {
           <label className="mt-4 block text-sm font-semibold">Message<textarea rows={5} className={`${field} mt-1.5 resize-none`} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} maxLength={2000} /></label>
           {error && <p role="alert" className="mt-3 text-sm font-medium text-destructive">{error}</p>}
           {sent && !error && <p role="status" className="mt-3 text-sm font-medium text-highlight-foreground">Your email app should now be open with the message ready to send.</p>}
-          <button type="submit" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition hover:bg-secondary">
+          <button type="submit" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-bold text-primary-foreground shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl">
             Compose email <Send className="h-4 w-4" />
           </button>
           <p className="mt-3 text-center text-xs text-muted-foreground">Opens your email app, addressed to Sirisha.</p>
@@ -425,7 +446,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="bg-background py-10">
+    <footer className="border-t bg-surface py-12">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-lg font-extrabold text-primary">{profile.name}<span className="text-accent">.</span></p>
