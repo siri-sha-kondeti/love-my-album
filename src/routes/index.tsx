@@ -161,6 +161,7 @@ function Hero() {
               />
             </div>
               <p className="mt-6 text-sm font-semibold">{profile.name}</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-hero-muted">Senior SAP EDI &amp; Functional Consultant</p>
             </div>
             <div className="glass absolute inset-x-4 bottom-4 flex items-center gap-3 rounded-2xl p-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground"><Globe2 className="h-5 w-5" /></span>
